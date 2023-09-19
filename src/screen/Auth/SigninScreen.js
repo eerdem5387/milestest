@@ -1,6 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import React, { useState } from 'react';
-import { SafeAreaView, Text, StyleSheet, TextInput, Button } from 'react-native';
+import { SafeAreaView, Text, View, StyleSheet, TextInput, Image, TouchableHighlight } from 'react-native';
 
 
 const SigninScreen = () => {
@@ -14,29 +14,48 @@ const SigninScreen = () => {
             console.log('Başarılı giriş!', userCredential.user);
         } catch (error) {
             console.error('Giriş hatası:', error);
-            Alert.alert('Hata', 'Giriş yaparken bir hata oluştu.');
+            alert('Bilgilerinizi Kontrol Ediniz', 'Giriş yaparken bir hata oluştu.');
         }
     };
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.header}>Giriş Yap</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="E-posta"
-                onChangeText={(text) => setEmail(text)}
-                value={email}
-                keyboardType="email-address"
-                autoCapitalize='none'
+            <Image
+                style={{ width: 250, height: 250 }}
+                source={require("../../assest/money1.png")}
             />
-            <TextInput
-                style={styles.input}
-                placeholder="Şifre"
-                onChangeText={(text) => setPassword(text)}
-                value={password}
-                secureTextEntry
-            />
-            <Button title="Giriş Yap" onPress={handleLogin} />
+            <View style={{ gap: 10 }}>
+                <View style={styles.inputarea}>
+                    <Image
+                        source={require("../../assest/mail.png")}
+                        style={styles.icon}
+                    />
+                    <TextInput
+                        style={styles.textinput}
+                        placeholder="E-Mail"
+                        onChangeText={(text) => setEmail(text)}
+                        value={email}
+                        keyboardType="email-address"
+                        autoCapitalize='none'
+                    />
+                </View>
+                <View style={styles.inputarea}>
+                    <Image
+                        source={require("../../assest/password.png")}
+                        style={styles.icon}
+                    />
+                    <TextInput
+                        style={styles.textinput}
+                        placeholder="Password"
+                        onChangeText={(text) => setPassword(text)}
+                        value={password}
+                        secureTextEntry={true}
+                    />
+                </View>
+            </View>
+            <TouchableHighlight style={styles.button} onPress={handleLogin}>
+                <Text style={styles.buttontext}>Login</Text>
+            </TouchableHighlight>
         </SafeAreaView>
     );
 };
@@ -46,17 +65,35 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        gap: 50
     },
-    header: {
-        fontSize: 24,
-        marginBottom: 20,
+    inputarea: {
+        flexDirection: "row",
+        gap: 8,
+        alignItems: "center"
     },
-    input: {
-        width: '80%',
+    icon: {
+        width: 25,
+        height: 25,
+    },
+    textinput: {
+        width: 310,
+        height: 50,
         padding: 10,
-        marginBottom: 10,
-        borderBottomWidth: 1,
+        backgroundColor: "lightgray",
+        borderRadius: 10,
     },
+    button: {
+        width: 350,
+        height: 50,
+        backgroundColor: "black",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 15,
+    },
+    buttontext: {
+        color: "white",
+    }
 });
 
 export default SigninScreen;
